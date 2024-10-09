@@ -9,7 +9,7 @@ namespace AppSenhaJL_LH.Models
 
         [Display(Name ="Nome completo", Description = "Nome e sobrenome")]
         [Required(ErrorMessage = "O nome completo é obrigatório.")]
-        public string Name { get; set; }
+        public string Nome { get; set; }
 
         [Display(Name = "Nascimento")]
         [Required(ErrorMessage = "A data é obrigatória")]
