@@ -21,7 +21,7 @@ namespace AppSenhaJL_LH.Repository
             {
                 conexao.Open();
 
-                MySqlCommand cmd = new MySqlCommand("select from cliente where Email = @Email and Senha = @Senha", conexao);
+                MySqlCommand cmd = new MySqlCommand("select * from cliente where Email = @Email and Senha = @Senha", conexao);
                 
                 cmd.Parameters.Add("@Email", MySqlDbType.VarChar).Value = Email; cmd.Parameters.Add("@Senha", MySqlDbType.VarChar).Value = Senha;
                 
@@ -30,7 +30,6 @@ namespace AppSenhaJL_LH.Repository
                 Cliente cliente = new Cliente();
                 
                 dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-                
                 while (dr.Read())
                 {
                     cliente.Id = Convert.ToInt32(dr["Id"]);
