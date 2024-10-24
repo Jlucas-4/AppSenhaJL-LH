@@ -128,7 +128,7 @@ namespace AppSenhaJL_LH.Repository
         }
 
 
-                public IEnumerable<Cliente> ObterTodosClientes()
+        public IEnumerable<Cliente> ObterTodosClientes()
         {
             List<Cliente> cliList = new List<Cliente>();
             using (var conexao = new MySqlConnection(_conexaoMySQL))
