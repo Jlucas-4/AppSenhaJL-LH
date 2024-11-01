@@ -69,14 +69,61 @@ public class ColaboradorRepository  :IColaboradorRepository
         }
     }
 
-    public Colaborador ObterCliente(int Id)
+    public Colaborador ObterColaborador(int Id)
     {
-        throw new NotImplementedException();
+        using (var conexao = new MySqlConnection(_conexaoMySQL))
+        {
+            conexao.Open();
+            MySqlCommand cmd = new MySqlCommand("select * from Colaborador WHERE Id=@Id;", conexao);
+            cmd.Parameters.AddWithValue("@Id", Id);
+
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            MySqlDataReader dr;
+
+            Colaborador colaborador = new Colaborador();
+            dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+            while (dr.Read())
+            {
+                
+                colaborador.Id = (Int32)(dr["Id"]);
+                colaborador.Nome = (string)(dr["Nome"]);
+                colaborador.Email = (string)(dr["Email"]);
+                colaborador.Senha = (string)(dr["Senha"]);
+                colaborador.Tipo = (string)(dr[" Tipo"]);
+            }
+            return colaborador;
+        }
     }
 
-    public IEnumerable<Colaborador> ObterTodosClientes()
+    public IEnumerable<Colaborador> ObterTodosColaboradores()
     {
-        throw new NotImplementedException();
+        List<Colaborador> colabList = new List<Colaborador>();
+        using (var conexao = new MySqlConnection(_conexaoMySQL))
+        {
+            conexao.Open();
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM COLABORADOR", conexao);
+
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            
+            DataTable dt = new DataTable();
+            
+            da.Fill(dt);
+            conexao.Close();
+            
+            foreach (DataRow dr in dt.Rows)
+            {
+                colabList.Add(
+                new Colaborador
+                {
+                    Id = Convert.ToInt32(dr["Id"]),
+                    Nome = (string)(dr["Nome"]),
+                    Email = (string)(dr["Email"]),
+                    Senha = (string)(dr["Senha"]),
+                    Tipo = (string)(dr["Tipo"])
+                });
+            }
+            return colabList;
+        }
     }
 }
 
